@@ -73,8 +73,8 @@ function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
 			var animate = function () {
 				requestAnimationFrame( animate );
 
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
+				cube.rotation.x =1;
+				cube.rotation.y = 0.01;
 
 				renderer.render( scene, camera );
 			};
