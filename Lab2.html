@@ -9,6 +9,61 @@
  <p id="angleZ">Hello!</p>
  <p id="angleX">Hello!</p>
  <p id="angleY">Hello5</p>
+ <script>
+ if ( WEBGL.isWebGLAvailable() === false ) {
+	document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+}
+var renderer, scene, camera, stats;
+var sphere, uniforms;
+init();render();
+//var clock = new THREE.Clock();
+function init() {
+	camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+	camera.position.z = 300;
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color( 0xCCCCCC );
+	
+	
+	//var sph = new THREE.SphereBufferGeometry( 0.5, 16, 8 );
+       
+	
+	var geometry = new THREE.TorusKnotBufferGeometry( 30, 8, 150, 28 );
+
+	sphere = new THREE.Mesh( geometry, material );
+	//CastShadows=true;
+	scene.add( sphere );
+	
+	
+	const planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00FF00 } ); 
+	const planeGeometry = new THREE.PlaneGeometry(200,200,50,50);
+	const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+	plane.receiveShadow = true;
+	plane.position.z = -100;
+	scene.add(plane);
+	renderer = new THREE.WebGLRenderer();
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+	
+	var container = document.getElementById( 'container' );
+	container.appendChild( renderer.domElement );
+	stats = new Stats();
+	container.appendChild( stats.dom );
+	//
+	window.addEventListener( 'resize', onWindowResize, false );
+}
+function onWindowResize() {
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+}
+function render() {
+	//var time = Date.now() * 0.01;			
+	//var delta = clock.getDelta();						
+	renderer.render( scene, camera );
+}
+ </script>
 <script>
 
 	
