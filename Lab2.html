@@ -61,7 +61,9 @@ var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
 	document.getElementById("angleZ").innerHTML ="alpha(Z) rotation:"+rotateDegrees;
 	document.getElementById("angleX").innerHTML ="beta(X) rotation:"+frontToBack;
 	document.getElementById("angleY").innerHTML ="gamma(Y) rotation:"+leftToRight;
-	cube.rotation.y += 0.01;
+	cube.rotation.y = (frontToBack*3.14)/180;
+	cube.rotation.x = (rotateDegrees*3.14)/180;
+	cube.rotation.z = (leftToRight*3.14)/180;
 	// usage:
 	//rotateObject(plane, 40, 30, 20);
 };
