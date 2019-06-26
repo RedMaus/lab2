@@ -10,62 +10,112 @@
  <p id="angleX">Hello!</p>
  <p id="angleY">Hello5</p>
  <div id="container"></div>
-<script>
-if ( WEBGL.isWebGLAvailable() === false ) {
-	document.body.appendChild( WEBGL.getWebGLErrorMessage() );
-}
-var renderer, scene, camera, stats;
-var sphere, uniforms;
-init();
-render();
-//var clock = new THREE.Clock();
-function init() {
-	camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.z = 300;
-	scene = new THREE.Scene();
-	scene.background = new THREE.Color( 0xCCCCCC );
-	
-	
-	//var sph = new THREE.SphereBufferGeometry( 0.5, 16, 8 );
-       
-	
-	var geometry = new THREE.TorusKnotBufferGeometry( 30, 8, 150, 28 );
+		<script>
+		if ( WEBGL.isWebGLAvailable() === false ) {
+			document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+		}
+		var light1;
+		var renderer, scene, camera, stats;
+		var sphere, uniforms;
+		var displacement, noise;
+		var clock = new THREE.Clock();
+		init();
+		animate();
+		function init() {
+			camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+			camera.position.z = 300;
+			scene = new THREE.Scene();
+			scene.background = new THREE.Color( 0xCCCCCC );
+			
+			
+			var sph = new THREE.SphereBufferGeometry( 0.5, 16, 8 );
+			//lights
+			light1 = new THREE.PointLight( 0xff0040, 2000, 0 );
+			light1.add( new THREE.Mesh( sph, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
+			light1.castShadow = true;
+			light1.position.z=100;
+			light1.intensity = 10;
+			light1.lookAt(0, 0, 0);
+			scene.add( light1 );
+			
+			
+			var canvas = mipmap(128, '#f00');
+			var texture = new THREE.CanvasTexture(canvas);
+	        
+			texture.mipmaps[0] = canvas;
+			texture.mipmaps[1] = mipmap(64, '#300');
+			texture.mipmaps[2] = mipmap(32, '#f00');
+			texture.mipmaps[3] = mipmap(16, '#600');
+			texture.mipmaps[4] = mipmap(8, '#0f0');
+			texture.mipmaps[5] = mipmap(4, '#00A');
+			texture.mipmaps[6] = mipmap(2, '#0BB');
+			texture.mipmaps[7] = mipmap(1, '#D0C');
+	        
+			texture.repeat.set(5, 5);
+			texture.wrapS = THREE.RepeatWrapping;
+			texture.wrapT = THREE.RepeatWrapping;
+			var material = new THREE.MeshLambertMaterial({ map: texture });
+			
+			
+			var geometry = new THREE.TorusKnotBufferGeometry( 30, 8, 150, 28 );
 
-	sphere = new THREE.Mesh( geometry, material );
-	//CastShadows=true;
-	//scene.add( sphere );
-	
-	
-	const planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00FF00 } ); 
-	const planeGeometry = new THREE.PlaneGeometry(200,200,50,50);
-	const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-	plane.receiveShadow = true;
-	plane.position.z = -100;
-	scene.add(plane);
-	renderer = new THREE.WebGLRenderer();
-	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
-	
-	var container = document.getElementById( 'container' );
-	container.appendChild( renderer.domElement );
-	stats = new Stats();
-	container.appendChild( stats.dom );
-	//
-	window.addEventListener( 'resize', onWindowResize, false );
-}
-function onWindowResize() {
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	renderer.setSize( window.innerWidth, window.innerHeight );
-}
-function render() {
-	//var time = Date.now() * 0.01;			
-	//var delta = clock.getDelta();						
-	renderer.render( scene, camera );
-}
-</script>
+			sphere = new THREE.Mesh( geometry, material );
+			sphere.CastShadows=true;
+			scene.add( sphere );
+			
+			
+			const planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00FF00 } ); 
+			const planeGeometry = new THREE.PlaneGeometry(200,200,50,50);
+			const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+			plane.receiveShadow = true;
+			plane.position.z = -100;
+			scene.add(plane);
+			renderer = new THREE.WebGLRenderer();
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+			
+			var container = document.getElementById( 'container' );
+			container.appendChild( renderer.domElement );
+			stats = new Stats();
+			container.appendChild( stats.dom );
+			//
+			window.addEventListener( 'resize', onWindowResize, false );
+		}
+		function onWindowResize() {
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+		}
+		function animate() {
+			requestAnimationFrame( animate );
+			render();
+			stats.update();
+		}
+		function render() {
+			var time = Date.now() * 0.01;
+			
+			var delta = clock.getDelta();
+			
+			light1.position.x = Math.sin( time * 0.07 ) * 30;
+			light1.position.y = Math.cos( time * 0.05 ) * 40;
+			
+			
+			renderer.render( scene, camera );
+		}
+		function mipmap(size, color) {
+			var imageCanvas = document.createElement("canvas"),
+				context = imageCanvas.getContext("2d");
+			imageCanvas.width = imageCanvas.height = size;
+			context.fillStyle = "#545";
+			context.fillRect(0, 0, size, size);
+			context.fillStyle = color;
+			context.fillRect(0, 0, size / 2, size / 2);
+			context.fillRect(size / 2, size / 2, size / 2, size / 2);
+			return imageCanvas;
+		}
+	</script>
 <script>
 
 	
