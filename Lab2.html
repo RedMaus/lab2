@@ -5,8 +5,9 @@
 <script src="https://github.com/mrdoob/three.js/tree/dev/build/three.js"></script>
 <script src="https://github.com/mrdoob/three.js/tree/dev/build/three.min.js"></script>
  <body>
- <p>Hello!</p>
- <p id="angle">Hello!</p>
+ <p id="angleZ">Hello!</p>
+ <p id="angleX">Hello!</p>
+ <p id="angleY">Hello!</p>
 <script>
 	if (window.DeviceOrientationEvent) {
     window.addEventListener("deviceorientation", function(event) {
@@ -26,7 +27,9 @@ var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
 	var alpha    = event.alpha;
 	var beta     = event.beta;
 	var gamma    = event.gamma;
-	document.getElementById("angle").innerHTML ="alpha(Z) rotation:"+alpha;
+	document.getElementById("angleZ").innerHTML ="alpha(Z) rotation:"+alpha;
+	document.getElementById("angleX").innerHTML ="beta(X) rotation:"+beta;
+	document.getElementById("angleY").innerHTML ="gamma(Y) rotation:"+gamma;
 };
 </script>
 </body>
