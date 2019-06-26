@@ -23,7 +23,10 @@
 
 var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
     // Сделайте что-нибудь необычное здесь
-	document.getElementById("angle").innerHTML = 5 + 6;
+	var alpha    = event.alpha;
+	var beta     = event.beta;
+	var gamma    = event.gamma;
+	document.getElementById("angle").innerHTML = alpha;
 };
 </script>
 </body>
