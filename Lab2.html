@@ -13,8 +13,7 @@
 	var renderer, scene, camera, stats,plane;
 	var sphere, uniforms;
 	//var displacement, noise;
-	init();
-	render();
+	
 	if (window.DeviceOrientationEvent) {
     window.addEventListener("deviceorientation", function(event) {
         // alpha: rotation around z-axis
@@ -73,11 +72,6 @@
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
 			renderer.setSize( window.innerWidth, window.innerHeight );
-		}
-		function animate() {
-			requestAnimationFrame( animate );
-			render();
-			stats.update();
 		}
 		function render() {
 			//var time = Date.now() * 0.01;			
