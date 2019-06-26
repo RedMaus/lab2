@@ -8,9 +8,9 @@
  <p>Hello</p>
  <p id="angleZ">Hello!</p>
  <p id="angleX">Hello!</p>
- <p id="angleY">Hello2</p>
+ <p id="angleY">Hello3</p>
 <script>
-	var renderer, scene, camera, stats,plane;
+	var renderer, scene, camera, stats;
 	var sphere, uniforms;
 	//var displacement, noise;
 	
@@ -51,7 +51,7 @@
 			
 			const planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00FF00 } ); 
 			const planeGeometry = new THREE.PlaneGeometry(200,200,50,50);
-			plane = new THREE.Mesh(planeGeometry, planeMaterial);
+			const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 			plane.receiveShadow = true;
 			plane.position.z = -100;
 			scene.add(plane);
@@ -87,7 +87,7 @@ var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
 	document.getElementById("angleX").innerHTML ="beta(X) rotation:"+frontToBack;
 	document.getElementById("angleY").innerHTML ="gamma(Y) rotation:"+leftToRight;
 	// usage:
-	rotateObject(plane, 40, 30, 20);
+	//rotateObject(plane, 40, 30, 20);
 };
 
 function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
