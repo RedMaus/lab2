@@ -35,7 +35,7 @@ function init(){
 
 			camera.position.z = 100;
 }
-	
+init();	
 if (window.DeviceOrientationEvent) {
    window.addEventListener("deviceorientation", function(event) {
        // alpha: rotation around z-axis
@@ -58,8 +58,10 @@ var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
 	document.getElementById("angleZ").innerHTML ="alpha(Z) rotation:"+rotateDegrees;
 	document.getElementById("angleX").innerHTML ="beta(X) rotation:"+frontToBack;
 	document.getElementById("angleY").innerHTML ="gamma(Y) rotation:"+leftToRight;
-	// usage:
-	rotateObject(plane, 40, 30, 20);
+	requestAnimationFrame( animate );
+	cube.rotation.x += 0.01;
+	cube.rotation.y += 0.01;
+	renderer.render( scene, camera );
 };
 
 function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
