@@ -5,7 +5,7 @@
 <script src="https://github.com/mrdoob/three.js/tree/dev/build/three.js"></script>
 <script src="https://github.com/mrdoob/three.js/tree/dev/build/three.min.js"></script>
  <body>
- <p>Hello2</p>
+ <p>Hello3</p>
  <p id="angleZ">Hello!</p>
  <p id="angleX">Hello!</p>
  <p id="angleY">Hello5</p>
@@ -16,7 +16,8 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 }
 var renderer, scene, camera, stats;
 var sphere, uniforms;
-init();render();
+init();
+render();
 //var clock = new THREE.Clock();
 function init() {
 	camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -32,7 +33,7 @@ function init() {
 
 	sphere = new THREE.Mesh( geometry, material );
 	//CastShadows=true;
-	scene.add( sphere );
+	//scene.add( sphere );
 	
 	
 	const planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00FF00 } ); 
