@@ -28,7 +28,30 @@ if (window.DeviceOrientationEvent) {
        handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
    }, true);
 }
+var scene = new THREE.Scene();
+scene.background = new THREE.Color( 0xff0000 );
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+var geometry = new THREE.TorusKnotGeometry(10,3,100,16 );
+var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+var cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+
+camera.position.z = 100;
+var animate = function () {
+	requestAnimationFrame( animate );
+
+	//cube.rotation.x =(rotateDegrees*Math.PI)/180;
+	//cube.rotation.y = 0.01;
+
+	renderer.render( scene, camera );
+};
+
+animate();
 
 var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
     // Сделайте что-нибудь необычное здесь
@@ -38,6 +61,7 @@ var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
 	document.getElementById("angleZ").innerHTML ="alpha(Z) rotation:"+rotateDegrees;
 	document.getElementById("angleX").innerHTML ="beta(X) rotation:"+frontToBack;
 	document.getElementById("angleY").innerHTML ="gamma(Y) rotation:"+leftToRight;
+	cube.rotation.y += 0.01;
 	// usage:
 	//rotateObject(plane, 40, 30, 20);
 };
@@ -50,32 +74,7 @@ function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
    //render();
 }
 
-var scene = new THREE.Scene();
-			scene.background = new THREE.Color( 0xff0000 );
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
-
-			var geometry = new THREE.TorusKnotGeometry(10,3,100,16 );
-			var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-			var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
-
-			camera.position.z = 100;
-
-			var animate = function () {
-				requestAnimationFrame( animate );
-
-				cube.rotation.x =(rotateDegrees*Math.PI)/180;
-				cube.rotation.y = 0.01;
-
-				renderer.render( scene, camera );
-			};
-
-			animate();
- 
 </script>
 
  <script>
