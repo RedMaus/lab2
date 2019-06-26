@@ -7,12 +7,19 @@
 <script src="https://github.com/mrdoob/stats.js/tree/master/build/stats.min.js"></script>
 <script src="https://github.com/mrdoob/three.js/blob/master/examples/js/WebGL.js"></script>
  <body>
- <p>Hello8</p>
+ <div id="container">
+ <p>Hello10</p>
  <p id="angleZ">Hello!</p>
  <p id="angleX">Hello!</p>
  <p id="angleY">Hello5</p>
- <div id="container"></div>
+ </div>
  <script>
+			
+
+			
+		</script>
+<script>
+function init(){
 			var scene = new THREE.Scene();
 			scene.background = new THREE.Color( 0xff0000 );
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -27,20 +34,7 @@
 			scene.add( cube );
 
 			camera.position.z = 100;
-
-			var animate = function () {
-				requestAnimationFrame( animate );
-
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
-
-				renderer.render( scene, camera );
-			};
-
-			animate();
-		</script>
-<script>
-
+}
 	
 if (window.DeviceOrientationEvent) {
    window.addEventListener("deviceorientation", function(event) {
@@ -65,19 +59,24 @@ var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
 	document.getElementById("angleX").innerHTML ="beta(X) rotation:"+frontToBack;
 	document.getElementById("angleY").innerHTML ="gamma(Y) rotation:"+leftToRight;
 	// usage:
-	//rotateObject(plane, 40, 30, 20);
+	rotateObject(plane, 40, 30, 20);
 };
 
 function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
    object.rotateX(THREE.Math.degToRad(degreeX));
    object.rotateY(THREE.Math.degToRad(degreeY));
    object.rotateZ(THREE.Math.degToRad(degreeZ));
-   //init();
-   //render();
+   init();
+   animate();
 }
+var animate = function () {
+				requestAnimationFrame( animate );
 
+				cube.rotation.x += 0.01;
+				cube.rotation.y += 0.01;
 
- 
+				renderer.render( scene, camera );
+			};
 </script>
 </body>
 </html>
