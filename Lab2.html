@@ -8,7 +8,7 @@
 <script src="https://github.com/mrdoob/three.js/blob/master/examples/js/WebGL.js"></script>
  <body>
  <div id="container">
- <p>Hello9</p>
+ <p>Hello10</p>
  <p id="angleZ">Hello!</p>
  <p id="angleX">Hello!</p>
  <p id="angleY">Hello5</p>
@@ -73,7 +73,7 @@ function rotateObject(object, degreeX=0, degreeY=0, degreeZ=0) {
 			var animate = function () {
 				requestAnimationFrame( animate );
 
-				cube.rotation.x += rotateDegrees/360;
+				cube.rotation.x += 0.01;
 				cube.rotation.y += 0.01;
 
 				renderer.render( scene, camera );
