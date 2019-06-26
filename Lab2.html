@@ -5,12 +5,13 @@
 <script src="https://github.com/mrdoob/three.js/tree/dev/build/three.js"></script>
 <script src="https://github.com/mrdoob/three.js/tree/dev/build/three.min.js"></script>
  <body>
- <p>Hello1</p>
+ <p>Hello2</p>
  <p id="angleZ">Hello!</p>
  <p id="angleX">Hello!</p>
  <p id="angleY">Hello5</p>
- <script>
- if ( WEBGL.isWebGLAvailable() === false ) {
+ <div id="container"></div>
+<script>
+if ( WEBGL.isWebGLAvailable() === false ) {
 	document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 }
 var renderer, scene, camera, stats;
@@ -63,7 +64,7 @@ function render() {
 	//var delta = clock.getDelta();						
 	renderer.render( scene, camera );
 }
- </script>
+</script>
 <script>
 
 	
